@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include "GENFUN.h"
 #include <stdlib.h>
-void main ( void ) 
-{
+void main ( void ) {
 
     //  a ---> A
     uint8 au8TestArray[12] = "hello world";
@@ -19,7 +18,7 @@ void main ( void )
 
 
     // Ocurrencia
-    uint8 u8Letra_A_Target;
+    uint8 u8Letra_A_Target; 
     uint8 au8Texto_Ocurrencia[12] = "hello world";
     uint8 u8Se_Repite;
     printf("            | Ocurrencia |\n\n");
@@ -30,27 +29,32 @@ void main ( void )
 
 
     //Promedio
-    uint8 u8Cadena_A_Sumar[5] = { 'A', 'Z' , 'z' , 'w', 'h' };
-    uint8 Posicion_For;
+    uint8 u8Cadena_A_Sumar[5] = { 71, 6 , 45 , 86,59 };
+    uint8 Posicion_For; //variable de apoyo
     uint16 u16Promedio;
     printf("            | Promedio |\n\n");
     printf("El promedio de la cadena <<");
     for ( Posicion_For = 0 ; Posicion_For < 5 ; Posicion_For ++) {
-        printf(" %c ", u8Cadena_A_Sumar[Posicion_For ]);
+        printf(" %d ", u8Cadena_A_Sumar[Posicion_For]);
     }
     u16Promedio = GENFUN_u8GetAverage ( &u8Cadena_A_Sumar[0], 5 );
     printf(">> es %d", u16Promedio);
 
 
-    //Cambiar elemento de la cadena 
-    uint8 Cadena_A_Cambiar[6] = "hello", Caracter_A_Incluir = 'X';
+    //Cambiar Cadena 
+    uint8 Cadena_A_Cambiar[12] = "hello world";
+    uint8 Caracter_A_Incluir = 0;
+    uint8 i; //variable de apoyo
     printf("\n\n            | Cambiar Caracter de la Cadena |\n\n");
     printf("Texto antes de ser cambiado %s\n", Cadena_A_Cambiar);
-    printf("Se cambiara la 4ta posicion");
-    GENFUN_u8MemSet ( &Cadena_A_Cambiar[4], Caracter_A_Incluir, 6 );
-    printf("\nTexto despues de ser cambiado %s", Cadena_A_Cambiar);
-
-
+    printf("Que caracter quiere poner ");
+    scanf("%c", &Caracter_A_Incluir);
+    printf("Se cambiara la por %c ", Caracter_A_Incluir);
+    GENFUN_u8MemSet ( &Cadena_A_Cambiar[0], Caracter_A_Incluir, 11 );
+    printf("\nTexto despues de ser cambiado ");
+    for (i=0 ; i<11 ; i++) {
+        printf("%c",Cadena_A_Cambiar[i]);
+    }
     //Sustituir una cadena por otra
 
     uint8 Cadena_Destino[12] = "hello world";
@@ -65,24 +69,24 @@ void main ( void )
     
     uint8 Cadena_A_Ordenar[5] = {'6','9','3','4','8',};
     uint8 Cadena_Ordenada[5] = {0,0,0,0,0};
-    uint8 i;
     printf("\n\n            | Ordenar Cadena |\n\nCadena Antes de Ordenar\n");
-    for (i=0;i<5;i++) 
-    {
-    printf("  %c  ", Cadena_A_Ordenar[i]);
+    for (i=0;i<5;i++) {
+        printf("  %c  ", Cadena_A_Ordenar[i]);
     }
     GENFUN_vSortList ( &Cadena_A_Ordenar[0], &Cadena_Ordenada[0], 5);
     printf("\n\nCadena Ordenada\n\n");
-    for (i=0;i<5;i++)
-    printf("  %c  ", Cadena_Ordenada[i]);
-    
+    for (i=0;i<5;i++) {
+        printf("  %c  ", Cadena_Ordenada[i]);
+    }
 
 
     //Promedio entre caracteres
+    uint8 DELAY_2;
     printf("\n\n            | Suavizar |\n");
+    printf("Habra spam de 255 elementos introduce cualquier tecla para comenzar");
+    gets(&DELAY_2);
     uint8 u8Cadena_Fuente[255];
-    for (i=0 ; i<255 ;i++) 
-    {
+    for (i=0 ; i<255 ;i++) {
         u8Cadena_Fuente[i] = printRandoms(15 , 70 , 1);
     }
     uint8 u8Cadena_Destino[255];
@@ -93,11 +97,13 @@ void main ( void )
 
     uint8 u8Cadena_Src[255];
     uint8 u8Cadena_Dest[255];
-    for (i=0 ; i<255 ;i++) 
-    {
+    uint8 DELAY_1;
+    for (i=0 ; i<255 ;i++) {
         u8Cadena_Src[i] = printRandoms(10 , 120 , 1);
     }
     printf("\n\n            | Filtro Max y Min |\n");
+    printf("Habra spam de 255 elementos introduce cualquier tecla para comenzar");
+    gets(&DELAY_1);
     GENFUN_vFilterSignal ( &u8Cadena_Src[0], &u8Cadena_Dest[0], LIMITE_MAXIMO_FILTRO, LIMITE_MINIMO_FILTRO);
 
 }
@@ -107,13 +113,10 @@ void main ( void )
 void GENFUN_CapsOn ( uint8 *pu8Src, uint8 u8SizeOfList ) {
 
     while ( u8SizeOfList > 0 ) {
-        if ( *pu8Src > ASCII_LOW_THRESHOLD_OFF_ON && *pu8Src < ACII_HIGH_THRESHOLD_OFF_ON ) 
-        {
+        if ( *pu8Src > ASCII_LOW_THRESHOLD_OFF_ON && *pu8Src < ACII_HIGH_THRESHOLD_OFF_ON ) {
             *pu8Src -= ASCII_CONVERTION_FACTOR;
 
-        }
-        else 
-        {
+        }else {
             //No Ocurre Nada
         }
         *pu8Src++;
@@ -123,16 +126,12 @@ void GENFUN_CapsOn ( uint8 *pu8Src, uint8 u8SizeOfList ) {
 
 }
 
-void GENFUN_CapsOff ( uint8 *pu8Src, uint8 u8SizeOfList ) 
-{
+void GENFUN_CapsOff ( uint8 *pu8Src, uint8 u8SizeOfList ) {
     while ( u8SizeOfList > 0 ) {
-        if ( *pu8Src > ASCII_LIMITE_INFERIOR_MAYUSCULAS && *pu8Src < ASCII_LIMITE_SUPERIOR_MAYUSCULAS ) 
-        {
+        if ( *pu8Src > ASCII_LIMITE_INFERIOR_MAYUSCULAS && *pu8Src < ASCII_LIMITE_SUPERIOR_MAYUSCULAS ) {
             *pu8Src += ASCII_CONVERTION_FACTOR;
 
-        }
-        else 
-        {
+        }else {
             //No Ocurre Nada
         }
         *pu8Src++;
@@ -141,20 +140,17 @@ void GENFUN_CapsOff ( uint8 *pu8Src, uint8 u8SizeOfList )
     }
 }
 
-uint8 GENFUN_u8Ocurrencia ( uint8 *pu8Src, uint8 u8Letra_A_Target, uint8 u8SizeOfList ) 
-{
+uint8 GENFUN_u8Ocurrencia ( uint8 *pu8Src, uint8 u8Letra_A_Target, uint8 u8SizeOfList ) {
     uint8 u8ocurrencia = 0 ;
     while ( u8SizeOfList != 0 ) {
-        if ( *pu8Src != u8Letra_A_Target ) 
-        {
+        if ( *pu8Src != u8Letra_A_Target ) {
             
-            /*Nothing to do*/
+           //No ocurre nada 
 
         }
-        else 
-        {
+        else {
 
-        	u8ocurrencia++;
+        u8ocurrencia++;
 
         }
         *pu8Src++;
@@ -164,14 +160,12 @@ uint8 GENFUN_u8Ocurrencia ( uint8 *pu8Src, uint8 u8Letra_A_Target, uint8 u8SizeO
 
 }
 
-uint8 GENFUN_u8GetAverage ( uint8 *pu8Src, uint8 u8SizeOfList ) 
-{
+uint8 GENFUN_u8GetAverage ( uint8 *pu8Src, uint8 u8SizeOfList ) {
     
     uint16 u16Suma = 0;
     uint8 N_Elementos;
     N_Elementos = u8SizeOfList;
-    while ( u8SizeOfList != 0 ) 
-    {
+    while ( u8SizeOfList != 0 ) {
 
         u16Suma += *pu8Src;
         *pu8Src++;
@@ -182,18 +176,18 @@ uint8 GENFUN_u8GetAverage ( uint8 *pu8Src, uint8 u8SizeOfList )
     return u16Suma/N_Elementos;
 }
 
-void GENFUN_u8MemSet (uint8 *pu8Src, uint8 u8Char2Set, uint8 u8SizeOfList) 
-{
+void GENFUN_u8MemSet (uint8 *pu8Src, uint8 u8Char2Set, uint8 u8SizeOfList) {
 
-    *pu8Src = u8Char2Set;
-        
+    while ( u8SizeOfList != 0) {
+        *pu8Src = u8Char2Set;
+        *pu8Src++;
+        u8SizeOfList--;
+    }
 }
 
-void GENFUN_u8MemCopy (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList) 
-{
+void GENFUN_u8MemCopy (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList) {
 
-    while ( u8SizeOfList != 0 ) 
-    {
+    while ( u8SizeOfList != 0 ) {
 
         *pu8Src = *pu8Dest;
         *pu8Src++;
@@ -203,33 +197,30 @@ void GENFUN_u8MemCopy (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList)
 
 }
 
-void GENFUN_vSortList (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList) 
-{
+void GENFUN_vSortList (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList) {
 
-    uint8 i;
-    uint8 j;
+    uint8 i;        //   variables
+    uint8 j;        //      de 
+    uint8 temp;     //     apoyo
     uint8 Arreglo[5] = {0,0,0,0,0};
-    uint8 temp;
+    
 
-    for(i=0;i<6;i++) 
-    {
+    for(i=0;i<6;i++) {
         Arreglo[i]= *pu8Src;
         pu8Src++;
     }
     for (i=0;i<6;i++)
-    pu8Src--; 
+        pu8Src--; 
     
-        for (i=0 ; i<4 ; i++) {
-            for ( j=i+1; j<5 ; j++) {
-
-                if (Arreglo[i]>Arreglo[j]) {
-                    temp =Arreglo[i];
-                    Arreglo[i]=Arreglo[j];
-                    Arreglo[j]= temp;
-
-                }
+    for (i=0 ; i<4 ; i++) {
+        for ( j=i+1; j<5 ; j++) {
+            if (Arreglo[i]>Arreglo[j]) {
+                temp =Arreglo[i];
+                Arreglo[i]=Arreglo[j];
+                Arreglo[j]= temp;
             }
         }
+    }
     for (i=0;i<5;i++) {
         *pu8Dest=Arreglo[i];
         *pu8Dest++;
@@ -238,14 +229,15 @@ void GENFUN_vSortList (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList)
 
 void GENFUN_vSoftSignal (uint8 *pu8Src, uint8 *pu8Dest) {
 
-    uint8 i,j, Limite_De_Operacion = 255;
-    while ( Limite_De_Operacion > i ) 
-    {
+    uint8 i;  //  variables
+    uint8 j; //    de apoyo
+    uint8 Limite_De_Operacion = 0;
+    while ( Limite_De_Operacion < 255 ) {
         i = *pu8Src; 
         *pu8Src++;
         j = *pu8Src;
         *pu8Dest = ( i+j ) / 2;
-        Limite_De_Operacion--;
+        Limite_De_Operacion++;
         printf("< %d + %d >", i,j);
         printf("  | %d |\n", *pu8Dest);
     }
@@ -256,27 +248,24 @@ void GENFUN_vSoftSignal (uint8 *pu8Src, uint8 *pu8Dest) {
 
 void GENFUN_vFilterSignal (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8MaxVal, uint8 u8MinVal) {
 
-    uint8 apoyo1, apoyo2, Limite_De_Elementos=0;
+    uint8 conversion_1;
+    uint8 conversion_2;
+    uint8 Limite_De_Elementos=0;
     while ( Limite_De_Elementos < 255 ) {
         
-        if ( *pu8Src > LIMITE_MAXIMO_FILTRO ) 
-        {
+        if ( *pu8Src > LIMITE_MAXIMO_FILTRO ) {
 
-            apoyo1 = *pu8Src - LIMITE_MAXIMO_FILTRO;
-            *pu8Dest = *pu8Src - apoyo1;
+            conversion_1 = *pu8Src - LIMITE_MAXIMO_FILTRO;
+            *pu8Dest = *pu8Src - conversion_1;
             printf("\n| %d ----> %d |", *pu8Src, *pu8Dest);
-        }
-        else if ( *pu8Src < LIMITE_MINIMO_FILTRO ) 
-        {
+        }else if ( *pu8Src < LIMITE_MINIMO_FILTRO ) {
 
-            apoyo2 = LIMITE_MINIMO_FILTRO - *pu8Src;
-            *pu8Dest = *pu8Src + apoyo2;
+            conversion_2 = LIMITE_MINIMO_FILTRO - *pu8Src;
+            *pu8Dest = *pu8Src + conversion_2;
             printf("\n| %d ----> %d |", *pu8Src, *pu8Dest);
-        }
-        else 
-        {
+        }else {
             *pu8Dest = *pu8Src;
-            printf("\n| Cumple %d        |", *pu8Dest);
+            printf("\n| Cumple %d  |", *pu8Dest);
         }
         
         *pu8Dest++;
@@ -287,8 +276,7 @@ void GENFUN_vFilterSignal (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8MaxVal, uint8 
 }
 
 uint8 printRandoms(uint8 lower, uint8 upper,  uint8 count) 
-{ 
-    uint8 i; 
+{  
     uint8 num;
     num = (rand() % (upper - lower + 1)) + lower; 
     //printf("%d \n", num); 
