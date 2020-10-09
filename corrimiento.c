@@ -3,7 +3,7 @@
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
-
+/*Ejemplo*/
 int main()
 {
     uint32 u32NumeroBits = 0;
