@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "GENFUN.h"
 #include <stdlib.h>
+
+
+/*Nota 80*/
 void main ( void ) {
 
     //  a ---> A
@@ -202,7 +205,7 @@ void GENFUN_vSortList (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8SizeOfList) {
     uint8 i;        //   variables
     uint8 j;        //      de 
     uint8 temp;     //     apoyo
-    uint8 Arreglo[5] = {0,0,0,0,0};
+    uint8 Arreglo[5] = {0,0,0,0,0};     /*Tu funcion es solmente para 5 elementos, hardcodeaste los numeros en lugar del parametro*/
     
 
     for(i=0;i<6;i++) {
@@ -248,7 +251,7 @@ void GENFUN_vSoftSignal (uint8 *pu8Src, uint8 *pu8Dest) {
 
 void GENFUN_vFilterSignal (uint8 *pu8Src, uint8 *pu8Dest, uint8 u8MaxVal, uint8 u8MinVal) {
 
-    uint8 conversion_1;
+    uint8 conversion_1;                     /*No utilizaste los parametros como se debe en la funcion*/
     uint8 conversion_2;
     uint8 Limite_De_Elementos=0;
     while ( Limite_De_Elementos < 255 ) {
