@@ -22,6 +22,7 @@ void AlgoritmoDeLuhn (uint8 *pu8String, uint8 SizeStr)
 	uint8 u8Par;
 	uint8 u8Total;
 	uint8 u8Val;
+	uint8 u8Verif;
 	for(uint8 i=0;i<SizeStr;i++)
 	{	
 		u8Par=i%2;
@@ -45,5 +46,6 @@ void AlgoritmoDeLuhn (uint8 *pu8String, uint8 SizeStr)
 		pu8String++;
 	}	
 	u8Val=u8Total%10;
-	printf("\nEl ultimo digito debe ser: %x\n",u8Val );
+	u8Verif=10-u8Val;
+	printf("\nEl ultimo digito debe ser: %i\n",u8Verif);
 }
