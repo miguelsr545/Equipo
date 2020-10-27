@@ -4,9 +4,9 @@
 
 void main ( void )
 {
-	uint8 i;
+    uint8 i;
     uint8 enSector;
-    uint8 Random=0;
+    uint8 u8Random=0;
 	uint8 u8InputAction = 0;
 	uint8 u8ConfirmationFromAction = 0;
 	uint8 u8Sector[5]= {SECTOR0_SLOTS, SECTOR1_SLOTS, SECTOR2_SLOTS, SECTOR3_SLOTS, SECTOR4_SLOTS};
@@ -15,7 +15,7 @@ void main ( void )
 	uint8 u8TotalEarnings = 0;
 	for(i=0;i<5;i++)
 	{
-		printRandoms(&u8Sector[i]);
+		print2Randoms(&u8Sector[i]);
 	}
 	while(1)
 	{
@@ -80,13 +80,13 @@ void main ( void )
 	}
 }
 /*F1*/
-void ShowAvailableSlots (uint8 *pu8Sector)
+uint8 ShowAvailableSlots (uint8 *pu8Sector)
 {
 	printf("The number of available slots is: %d",*pu8Sector);
 }
 
 /*F2*/
-void ShowNotAvailableSlots (uint8 *pu8Sector, uint8 Sector)
+uint8 ShowNotAvailableSlots (uint8 *pu8Sector, uint8 Sector)
 {
 	uint8 OnUse;
 	if( Sector == 0 )
@@ -113,7 +113,7 @@ void ShowNotAvailableSlots (uint8 *pu8Sector, uint8 Sector)
 }
 
 /*F3*/
-void ShowEarnedMoney ( uint8 *pu8Sector )
+uint8 ShowEarnedMoney ( uint8 *pu8Sector )
 {
 	printf("The amount of money earned in this sector is: $%d\n",*pu8Sector );
 }
@@ -133,7 +133,7 @@ uint8 u8AddCarToSector( uint8 *pu8Sector, uint8 u8check )
 /*F5*/
 uint8 u8RemoveCarFromSector( uint8 *pu8Sector, uint8 u8check, uint8 *pu8ParkingFee )
 {
-	if(*pu8Sector <> u8check)
+	if(*pu8Sector != u8check)
 	{
 		*pu8Sector += 1;
 		printf("The car has been removed successfully \n");
@@ -145,7 +145,7 @@ uint8 u8RemoveCarFromSector( uint8 *pu8Sector, uint8 u8check, uint8 *pu8ParkingF
 	}
 }
 /*F6*/
-void u8ImportPaymentOfSlot( uint8 *pu8Tot, uint8 *pu8Add )
+uint8 u8ImportPaymentOfSlot( uint8 *pu8Tot, uint8 *pu8Add )
 {
 	printf("The section made: $%d\n",*pu8Add);
 	*pu8Tot += *pu8Add;
@@ -158,7 +158,7 @@ uint8 printRandoms(uint8 *pu8Random)
     *pu8Random = (rand() % 3); 
 } 
 /*RandomNumberGenForSpots*/
-uint8 printRandoms(uint8 *pu8Random) 
+uint8 print2Randoms(uint8 *pu8Random) 
 {  
     *pu8Random = (rand() % 6); 
 } 
