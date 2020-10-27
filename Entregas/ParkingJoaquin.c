@@ -9,13 +9,13 @@ void main ( void )
     uint8 Random=0;
 	uint8 u8InputAction = 0;
 	uint8 u8ConfirmationFromAction = 0;
-	uint8 u8Sector[5]= {Sector0_Slots, SECTOR1_SLOTS, SECTOR2_SLOTS, SECTOR3_SLOTS, SECTOR4_SLOTS};
-	uint8 u8SectorMaxSlots[5] = {Sector0_Slots, SECTOR1_SLOTS, SECTOR2_SLOTS, SECTOR3_SLOTS, SECTOR4_SLOTS};
+	uint8 u8Sector[5]= {SECTOR0_SLOTS, SECTOR1_SLOTS, SECTOR2_SLOTS, SECTOR3_SLOTS, SECTOR4_SLOTS};
+	uint8 u8SectorMaxSlots[5] = {SECTOR0_SLOTS, SECTOR1_SLOTS, SECTOR2_SLOTS, SECTOR3_SLOTS, SECTOR4_SLOTS};
 	uint8 u8SectorMoney[5] = {0, 0, 0, 0, 0};
 	uint8 u8TotalEarnings = 0;
 	for(i=0;i<5;i++)
 	{
-		uint8 printRandoms(&u8Sector[i]);
+		printRandoms(&u8Sector[i]);
 	}
 	while(1)
 	{
@@ -64,10 +64,10 @@ void main ( void )
 		{
 			printf("Not a valid sector\n");
 		}
-		uint8 printRandoms( u8Random );
+		printRandoms( u8Random );
 		if( u8Random == 0 )
 			{
-				uint8 u8AddCarToSector( &u8Sector[enSector], u8SectorMaxSlots[enSector]);
+				u8AddCarToSector( &u8Sector[enSector], u8SectorMaxSlots[enSector]);
 			}
 			else if( u8Random == 1 )
 			{
@@ -80,45 +80,45 @@ void main ( void )
 	}
 }
 /*F1*/
-void ShowAvailableSlots (uint8 pu8Sector)
+void ShowAvailableSlots (uint8 *pu8Sector)
 {
 	printf("The number of available slots is: %d",*pu8Sector);
 }
 
 /*F2*/
-void ShowNotAvailableSlots (uint8 pu8Sector, uint8 Sector)
+void ShowNotAvailableSlots (uint8 *pu8Sector, uint8 Sector)
 {
 	uint8 OnUse;
 	if( Sector == 0 )
 			{
-				OnUse=Sector0_Slots-*pu8Sector;
+				OnUse=SECTOR0_SLOTS-*pu8Sector;
 			}
 			else if( Sector == 1 )
 			{
-				OnUse=Sector1_Slots-*pu8Sector;
+				OnUse=SECTOR1_SLOTS-*pu8Sector;
 			}
 			else if( Sector == 2 )
 			{
-				OnUse=Sector2_Slots-*pu8Sector;
+				OnUse=SECTOR2_SLOTS-*pu8Sector;
 			}
 			else if( Sector == 3 )
 			{
-				OnUse=Sector3_Slots-*pu8Sector;
+				OnUse=SECTOR3_SLOTS-*pu8Sector;
 			}
 			else if ( Sector == 4 )
 			{
-				OnUse=Sector4_Slots-*pu8Sector;
+				OnUse=SECTOR4_SLOTS-*pu8Sector;
 			}
 	printf("The number of occupied slots is: %d",OnUse);		
 }
 
 /*F3*/
-void ShowEarnedMoney ( uint8 pu8Sector )
+void ShowEarnedMoney ( uint8 *pu8Sector )
 {
 	printf("The amount of money earned in this sector is: $%d\n",*pu8Sector );
 }
 /*F4*/
-uint8 u8AddCarToSector( uint8 pu8Sector, uint8 u8check )
+uint8 u8AddCarToSector( uint8 *pu8Sector, uint8 u8check )
 {
 	if(*pu8Sector > 0)
 	{
@@ -131,7 +131,7 @@ uint8 u8AddCarToSector( uint8 pu8Sector, uint8 u8check )
 	}
 }
 /*F5*/
-uint8 u8RemoveCarFromSector( uint8 pu8Sector, uint8 u8check, uint8 pu8ParkingFee )
+uint8 u8RemoveCarFromSector( uint8 *pu8Sector, uint8 u8check, uint8 *pu8ParkingFee )
 {
 	if(*pu8Sector <> u8check)
 	{
@@ -145,7 +145,7 @@ uint8 u8RemoveCarFromSector( uint8 pu8Sector, uint8 u8check, uint8 pu8ParkingFee
 	}
 }
 /*F6*/
-void u8ImportPaymentOfSlot( uint8 pu8Tot, uint8 pu8Add )
+void u8ImportPaymentOfSlot( uint8 *pu8Tot, uint8 *pu8Add )
 {
 	printf("The section made: $%d\n",*pu8Add);
 	*pu8Tot += *pu8Add;
@@ -153,12 +153,12 @@ void u8ImportPaymentOfSlot( uint8 pu8Tot, uint8 pu8Add )
 	printf("Total money is: %d\n",*pu8Tot);
 }
 /*RandomNumberGen*/
-uint8 printRandoms(uint8 pu8Random) 
+uint8 printRandoms(uint8 *pu8Random) 
 {  
     *pu8Random = (rand() % 3); 
 } 
 /*RandomNumberGenForSpots*/
-uint8 printRandoms(uint8 pu8Random) 
+uint8 printRandoms(uint8 *pu8Random) 
 {  
     *pu8Random = (rand() % 6); 
 } 
