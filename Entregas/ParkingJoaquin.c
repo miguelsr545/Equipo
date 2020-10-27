@@ -36,19 +36,19 @@ void main ( void )
 		{
 			if( u8InputAction == 1 )
 			{
-				void ShowAvailableSlots( &u8Sector[enSector]);
+				ShowAvailableSlots( &u8Sector[enSector]);
 			}
 			else if( u8InputAction == 2 )
 			{
-				void ShowNotAvailableSlots ( &u8Sector[enSector], enSector );
+				ShowNotAvailableSlots ( &u8Sector[enSector], enSector );
 			}
 			else if( u8InputAction == 3 )
 			{
-				void ShowEarnedMoney ( &u8SectorMoney[enSector] );
+				ShowEarnedMoney ( &u8SectorMoney[enSector] );
 			}
 			else if( u8InputAction == 4 )
 			{
-				uint8 u8AddCarToSector( &u8Sector[enSector], u8SectorMaxSlots[enSector]);
+				u8AddCarToSector( &u8Sector[enSector], u8SectorMaxSlots[enSector]);
 			}
 			else if ( u8InputAction == 5 )
 			{
@@ -56,7 +56,7 @@ void main ( void )
 			}
 			else
 			{
-				void u8ImportPaymentOfSlot(&u8TotalEarnings, &u8SectorMoney[enSector] );
+				u8ImportPaymentOfSlot(&u8TotalEarnings, &u8SectorMoney[enSector] );
 			}
 			printf("\n\n");
 		}
