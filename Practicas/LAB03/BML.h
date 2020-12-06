@@ -7,6 +7,6 @@
 
 
 void delay( uint32 number_of_seconds );
-void MonitorBomb1( uint8 u8TiempoEjecucion1 );
-void MonitorBomb2( uint8 u8TiempoEjecucion2 );
-void MonitorBomb3( uint8 u8TiempoEjecucion3 );
+void MonitorBomb1( uint16 u16TiempoEjecucion1 );
+void MonitorBomb2( uint16 u16TiempoEjecucion2 );
+void MonitorBomb3( uint16 u16TiempoEjecucion3 );

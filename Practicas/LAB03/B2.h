@@ -7,4 +7,4 @@ typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned long uint64;
 
-void Bomba2_ON( uint8 u8TimeLeft );
+void Bomba2_ON( uint16 u16TimeLeft );
