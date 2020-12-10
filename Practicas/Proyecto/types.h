@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 typedef unsigned char uint8;
 typedef unsigned short uint16;

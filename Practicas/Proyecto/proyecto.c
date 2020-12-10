@@ -154,7 +154,6 @@ void SacarCoche ( void )
 
 void MostrarEspacios ( void )
 {   
-    
     uint8 u8j;
     uint8 u8i;
     for ( u8j = CERO ; u8j < SIZE_PARKING ; u8j++)
@@ -165,8 +164,6 @@ void MostrarEspacios ( void )
         }
         printf("\n");
     }
-    
-    
 }
 
 uint8 printRandoms(uint8 lower, uint8 upper,  uint8 count) 
