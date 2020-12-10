@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 typedef unsigned char uint8;
 typedef unsigned short uint16;
@@ -16,19 +18,24 @@ typedef unsigned int uint32;
 
 #define LIMITE_INF          1
 #define LIMITE_SUP          15
+#define LIMIT_SLOT          16
 
 #define UNO                 1
-#define COCHE               88
+#define CERO                0
+#define COCHE               184
 #define PRECIO              20
 
 #define TRUE                1
 #define FALSE               0
+#define ABRIR               7
+#define CERRAR              21
+#define FIN_DIA             24
 
 typedef struct 
 {
     uint8 u8Cordenadas_X[SIZE_PARKING];
 
-}tstMax_X_COORDS;
+}tstPark;
 
 
 typedef struct 
@@ -42,10 +49,17 @@ typedef enum
     Meter = 1,
     Sacar,
     VerDisponibles,
-    PasarHora
-}enmAcciones;
+    PasarHora,
+    GananciasT
+}enAcciones;
 
-#define TABLERO     \
+typedef enum
+{
+    Estacionamiento_Abierto = 1,
+    Estacionamiento_Cerrado
+}enEstados;
+
+#define ESTACIONAMIENTO     \
 {					\
     {E_SUP_IZQ,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,BORDE_HORIZONTAL,E_SUP_DER},             \
     {BORDE_LATERAL,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,CASILLAS,BORDE_LATERAL},                                                                                                                             \
@@ -68,27 +82,28 @@ typedef enum
 
 #define TABLERO_TIEMPO     \
 {					\
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},                                                                                                                             \
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},                                                                                                                             \
+    {CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO,CERO},             \
 }
 
 
-void FuncPark( void );
+void FuncParkOpen ( void );
+void FuncParkClose( void );
 void MeterCoche ( void );
 void SacarCoche ( void );
 void MostrarEspacios ( void );
