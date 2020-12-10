@@ -4,6 +4,7 @@ tstPark Park[SIZE_PARKING] = ESTACIONAMIENTO;
 tstTime Time_Slot[SIZE_PARKING] = TABLERO_TIEMPO;
 static uint8 u8States_Estacionamiento = Estacionamiento_Abierto;
 uint8 u8Hora = ABRIR;
+uint16 u16Ganancias = CERO;
 
 void main ( void )
 {   
@@ -29,7 +30,8 @@ void FuncParkOpen ( void )
     printf("1) Ingresar auto\n");
     printf("2) Sacar auto\n");
     printf("3) Ver espacios Disponibles\n");
-    printf("4) Pasar 1 hora");
+    printf("4) Pasar 1 hora\n");
+    printf("5) Ganancias Totales");
     scanf("%d", &u8Accion_Park);
     if ( u8Accion_Park == Meter )
     {
@@ -47,11 +49,16 @@ void FuncParkOpen ( void )
     {
         TimeSlot ( );
     }
-    else 
+    else if ( u8Accion_Park == GananciasT )
+    {
+        printf("\n|$%d|\n", u16Ganancias);
+    }
+    else
     {
         printf("\nAccion invalida presione una tecla para continuar\n");
         scanf("%c", &u8Seguro);
     }
+    
 }
 
 void FuncParkClose( void )
@@ -81,6 +88,10 @@ void FuncParkClose( void )
     else if ( u8Accion_Park == PasarHora )
     {
         TimeSlot ( );
+    }
+    else if ( u8Accion_Park == GananciasT )
+    {
+        printf("\n|$%d|\n", u16Ganancias);
     }
     else 
     {
@@ -127,7 +138,6 @@ void SacarCoche ( void )
     uint8 u8XCoord;
     uint8 u8YCoord;
     uint16 u16Cobro;
-
     MostrarEspacios();
     printf("En que posicion de Y\n");
     scanf("%d", &u8YCoord);
@@ -143,6 +153,7 @@ void SacarCoche ( void )
         //printf("Y=%d\n", u8YCoord);
         u16Cobro = Time_Slot[u8YCoord].u8Tiempo[u8XCoord]*PRECIO;
         printf("Debe de pagar $%d\n", u16Cobro);
+        u16Ganancias+=u16Cobro;
     }
     else
     {
@@ -215,3 +226,4 @@ void TimeSlot ( void )
     //     printf("\n");
     // }
 }
+

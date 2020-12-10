@@ -49,7 +49,8 @@ typedef enum
     Meter = 1,
     Sacar,
     VerDisponibles,
-    PasarHora
+    PasarHora,
+    GananciasT
 }enAcciones;
 
 typedef enum
